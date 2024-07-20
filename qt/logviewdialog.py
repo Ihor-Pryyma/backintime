@@ -31,6 +31,7 @@ import snapshots
 import encfstools
 import snapshotlog
 import tools
+from utils import update_combo_profiles
 
 
 class LogViewDialog(QDialog):
@@ -187,16 +188,12 @@ class LogViewDialog(QDialog):
 
         self.comboProfiles.clear()
 
-        profiles = self.config.profilesSortedByName()
-        for profile_id in profiles:
-            self.comboProfiles.addProfileID(profile_id)
-            if profile_id == current_profile_id:
-                self.comboProfiles.setCurrentProfileID(profile_id)
+        update_combo_profiles(self.config, self.comboProfiles, current_profile_id)
 
         self.enableUpdate = True
         self.updateLog()
 
-        if len(profiles) <= 1:
+        if len(self.config.profilesSortedByName()) <= 1:
             self.lblProfile.setVisible(False)
             self.comboProfiles.setVisible(False)
 

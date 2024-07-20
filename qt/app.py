@@ -98,6 +98,7 @@ from restoredialog import RestoreDialog
 import languagedialog
 import messagebox
 from aboutdlg import AboutDlg
+from utils import update_combo_profiles
 
 
 class MainWindow(QMainWindow):
@@ -880,12 +881,8 @@ class MainWindow(QMainWindow):
 
         self.comboProfiles.clear()
 
+        update_combo_profiles(self.config, self.comboProfiles, self.config.currentProfile())
         profiles = self.config.profilesSortedByName()
-
-        for profile_id in profiles:
-            self.comboProfiles.addProfileID(profile_id)
-            if profile_id == self.config.currentProfile():
-                self.comboProfiles.setCurrentProfileID(profile_id)
 
         self.comboProfilesAction.setVisible(len(profiles) > 1)
 
