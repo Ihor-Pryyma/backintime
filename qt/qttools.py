@@ -718,4 +718,3 @@ class ProfileCombo(SortedComboBox):
             if self.itemData(i) == profileID:
                 self.setCurrentIndex(i)
                 break
-
