@@ -19,15 +19,16 @@
 See also test_schedule.py for low-level-Cron-behavior implemented in schedule
 module."""
 import unittest
-import pyfakefs.fake_filesystem_unittest as pyfakefs_ut
 import sys
 import os
 import tempfile
 import inspect
 from pathlib import Path
 from unittest import mock
+import pyfakefs.fake_filesystem_unittest as pyfakefs_ut
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import config
+from test import utils
 
 
 class Cron(unittest.TestCase):
@@ -80,26 +81,27 @@ class CrontabDebug(pyfakefs_ut.TestCase):
 
     def _create_config_file(self, parent_path):
         """Minimal config file"""
-        cfg_content = inspect.cleandoc('''
-            config.version=6
-            profile1.snapshots.include.1.type=0
-            profile1.snapshots.include.1.value=rootpath/source
-            profile1.snapshots.include.size=1
-            profile1.snapshots.no_on_battery=false
-            profile1.snapshots.notify.enabled=true
-            profile1.snapshots.path=rootpath/destination
-            profile1.snapshots.path.host=test-host
-            profile1.snapshots.path.profile=1
-            profile1.snapshots.path.user=test-user
-            profile1.snapshots.preserve_acl=false
-            profile1.snapshots.preserve_xattr=false
-            profile1.snapshots.remove_old_snapshots.enabled=true
-            profile1.snapshots.remove_old_snapshots.unit=80
-            profile1.snapshots.remove_old_snapshots.value=10
-            profile1.snapshots.rsync_options.enabled=false
-            profile1.snapshots.rsync_options.value=
-            profiles.version=1
-        ''')
+        config_data = utils.generate_temp_config(utils.SnapshotConfig(
+            config_version=6,
+            snapshot_type=0,
+            snapshot_value='rootpath/source',
+            snapshot_size=1,
+            no_on_battery='false',
+            notify_enabled='true',
+            snapshot_path='rootpath/destination',
+            snapshot_host='test-host',
+            snapshot_profile=1,
+            snapshot_user='test-user',
+            preserve_acl='false',
+            preserve_xattr='false',
+            remove_old_snapshots_enabled='true',
+            remove_old_snapshots_unit=80,
+            remove_old_snapshots_value=10,
+            rsync_options_enabled='false',
+            rsync_options_value='',
+            profiles_version=1
+        ))
+        cfg_content = inspect.cleandoc(config_data)
 
         # config file location
         config_fp = parent_path / 'config_path' / 'config'

@@ -15,13 +15,13 @@
 # with this program; if not, write to the Free Software Foundation,Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import subprocess
 import os
 import sys
-import unittest
+import subprocess
 from unittest.mock import patch
 from threading import Thread
-from test import generic
+
+from test import generic, utils
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -70,10 +70,8 @@ class TestApplicationInstance(generic.TestCase):
         return self.subproc.pid
 
     def _killProcess(self):
-        if self.subproc:
-            self.subproc.kill()
-            self.subproc.wait()
-            self.subproc = None
+        utils.kill_subprocess(self.subproc)
+        self.subproc = None
 
     def test_create_and_remove_pid_file(self):
         # create pid file

@@ -108,7 +108,7 @@ class MirrorMirrorOnTheWall(unittest.TestCase):
             # Enable asap. This list is a selection of existing (not all!)
             # problems currently existing in the BIT code base. Quite easy to fix
             # because their count is low.
-            # 'R0801',  # duplicate-code
+            'R0801',  # duplicate-code
             # 'W0237',  # arguments-renamed
             # 'W0221',  # arguments-differ
             # 'W0603',  # global-statement

@@ -28,9 +28,9 @@ import string
 import unittest
 from unittest.mock import patch
 from datetime import date, datetime
-from threading import Thread
 from tempfile import TemporaryDirectory
 from test import generic
+from test.constants import CURRENTUSER, CURRENTGROUP, CURRENTGID, CURRENTUID
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import logger
@@ -39,11 +39,6 @@ import snapshots
 import tools
 import mount
 
-CURRENTUID = os.geteuid()
-CURRENTUSER = pwd.getpwuid(CURRENTUID).pw_name
-
-CURRENTGID = os.getegid()
-CURRENTGROUP = grp.getgrgid(CURRENTGID).gr_name
 
 # all groups the current user is member in
 GROUPS = [i.gr_name for i in grp.getgrall() if CURRENTUSER in i.gr_mem]

@@ -143,14 +143,8 @@ class Mount(object):
                  profile_id = None,
                  tmp_mount = False,
                  parent = None):
-        self.config = cfg
-        if self.config is None:
-            self.config = config.Config()
-
-        self.profile_id = profile_id
-        if self.profile_id is None:
-            self.profile_id = self.config.currentProfile()
-
+        self.config = cfg if cfg is not None else config.Config()
+        self.profile_id = profile_id if profile_id is not None else self.config.currentProfile()
         self.tmp_mount = tmp_mount
         self.parent = parent
 
@@ -437,13 +431,9 @@ class MountControl(object):
         self.mountproc = None
         self.symlink_subfolder = None
 
-        self.config = cfg
-        if self.config is None:
-            self.config = config.Config()
+        self.config = cfg if cfg is not None else config.Config()
 
-        self.profile_id = profile_id
-        if self.profile_id is None:
-            self.profile_id = self.config.currentProfile()
+        self.profile_id = profile_id if profile_id is not None else self.config.currentProfile()
 
         self.tmp_mount = tmp_mount
         self.hash_id = hash_id

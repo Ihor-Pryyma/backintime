@@ -1,22 +1,20 @@
 import sys
 import inspect
 import tempfile
-from pathlib import Path
 import stat
 import io
-from datetime import datetime
 import unittest
 import unittest.mock as mock
-import json
-from contextlib import redirect_stdout, redirect_stderr
+from pathlib import Path
 from ast import literal_eval
+from contextlib import redirect_stdout, redirect_stderr
 
 # This workaround will become obsolet when migrating to src-layout
 sys.path.append(str(Path(__file__).parent))
 sys.path.append(str(Path(__file__).parent / 'plugins'))
-import logger
 import pluginmanager
 from config import Config
+from test import utils
 from snapshots import Snapshots, SID
 from usercallbackplugin import UserCallbackPlugin
 
@@ -210,26 +208,28 @@ class SystemTest(unittest.TestCase):
 
     @classmethod
     def _create_config_file(cls, parent_path):
-        cfg_content = inspect.cleandoc('''
-            config.version=6
-            profile1.snapshots.include.1.type=0
-            profile1.snapshots.include.1.value={rootpath}/{source}
-            profile1.snapshots.include.size=1
-            profile1.snapshots.no_on_battery=false
-            profile1.snapshots.notify.enabled=true
-            profile1.snapshots.path={rootpath}/{destination}
-            profile1.snapshots.path.host=test-host
-            profile1.snapshots.path.profile=1
-            profile1.snapshots.path.user=test-user
-            profile1.snapshots.preserve_acl=false
-            profile1.snapshots.preserve_xattr=false
-            profile1.snapshots.remove_old_snapshots.enabled=true
-            profile1.snapshots.remove_old_snapshots.unit=80
-            profile1.snapshots.remove_old_snapshots.value=10
-            profile1.snapshots.rsync_options.enabled=false
-            profile1.snapshots.rsync_options.value=
-            profiles.version=1
-        ''')
+        """Minimal config file"""
+        config_data = utils.generate_temp_config(utils.SnapshotConfig(
+            config_version=6,
+            snapshot_type=0,
+            snapshot_value=f'{parent_path}/{cls.NAME_SOURCE}',
+            snapshot_size=1,
+            no_on_battery='false',
+            notify_enabled='true',
+            snapshot_path=f'{parent_path}/{cls.NAME_DESTINATION}',
+            snapshot_host='test-host',
+            snapshot_profile=1,
+            snapshot_user='test-user',
+            preserve_acl='false',
+            preserve_xattr='false',
+            remove_old_snapshots_enabled='true',
+            remove_old_snapshots_unit=80,
+            remove_old_snapshots_value=10,
+            rsync_options_enabled='false',
+            rsync_options_value='',
+            profiles_version=1
+        ))
+        cfg_content = inspect.cleandoc(config_data)
 
         cfg_content = cfg_content.format(
             rootpath=parent_path,
