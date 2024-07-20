@@ -31,7 +31,7 @@ import snapshots
 import encfstools
 import snapshotlog
 import tools
-from utils import update_combo_profiles
+import qttools
 
 
 class LogViewDialog(QDialog):
@@ -188,7 +188,7 @@ class LogViewDialog(QDialog):
 
         self.comboProfiles.clear()
 
-        update_combo_profiles(self.config, self.comboProfiles, current_profile_id)
+        qttools.update_combo_profiles(self.config, self.comboProfiles, current_profile_id)
 
         self.enableUpdate = True
         self.updateLog()

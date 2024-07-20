@@ -71,7 +71,7 @@ import logger
 import encfsmsgbox
 from exceptions import MountException, NoPubKeyLogin, KnownHost
 from bitbase import URL_ENCRYPT_TRANSITION
-from utils import update_combo_profiles
+import qttools
 
 
 class SshProxyWidget(QWidget):
@@ -1410,7 +1410,7 @@ class SettingsDialog(QDialog):
 
         self.comboProfiles.clear()
 
-        update_combo_profiles(self.config, self.comboProfiles, current_profile_id)
+        qttools.update_combo_profiles(self.config, self.comboProfiles, current_profile_id)
 
         self.disableProfileChanged = False
 

@@ -209,7 +209,7 @@ class SystemTest(unittest.TestCase):
     @classmethod
     def _create_config_file(cls, parent_path):
         """Minimal config file"""
-        config_data = utils.generate_temp_config(utils.SnapshotConfig(
+        config_data = utils.format(
             config_version=6,
             snapshot_type=0,
             snapshot_value=f'{parent_path}/{cls.NAME_SOURCE}',
@@ -228,7 +228,7 @@ class SystemTest(unittest.TestCase):
             rsync_options_enabled='false',
             rsync_options_value='',
             profiles_version=1
-        ))
+        )
         cfg_content = inspect.cleandoc(config_data)
 
         cfg_content = cfg_content.format(

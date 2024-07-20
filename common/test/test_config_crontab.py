@@ -81,7 +81,7 @@ class CrontabDebug(pyfakefs_ut.TestCase):
 
     def _create_config_file(self, parent_path):
         """Minimal config file"""
-        config_data = utils.generate_temp_config(utils.SnapshotConfig(
+        config_data = utils.config_template.format(
             config_version=6,
             snapshot_type=0,
             snapshot_value='rootpath/source',
@@ -100,7 +100,7 @@ class CrontabDebug(pyfakefs_ut.TestCase):
             rsync_options_enabled='false',
             rsync_options_value='',
             profiles_version=1
-        ))
+        )
         cfg_content = inspect.cleandoc(config_data)
 
         # config file location

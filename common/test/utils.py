@@ -1,31 +1,6 @@
 """Utilities for testing"""
-from pathlib import Path
-from collections import namedtuple
 
-SnapshotConfig = namedtuple('SnapshotConfig', [
-    'config_version',
-    'snapshot_type',
-    'snapshot_value',
-    'snapshot_size',
-    'no_on_battery',
-    'notify_enabled',
-    'snapshot_path',
-    'snapshot_host',
-    'snapshot_profile',
-    'snapshot_user',
-    'preserve_acl',
-    'preserve_xattr',
-    'remove_old_snapshots_enabled',
-    'remove_old_snapshots_unit',
-    'remove_old_snapshots_value',
-    'rsync_options_enabled',
-    'rsync_options_value',
-    'profiles_version'
-])
-
-
-def generate_temp_config(snapshot_config: SnapshotConfig) -> str:
-    template_content = """
+config_template = """
         config.version=6
         profile1.snapshots.include.1.type={snapshot_type}
         profile1.snapshots.include.1.value={snapshot_value}
@@ -45,7 +20,6 @@ def generate_temp_config(snapshot_config: SnapshotConfig) -> str:
         profile1.snapshots.rsync_options.value={rsync_options_value}
         profiles.version={profiles_version}
     """
-    return template_content.format(**snapshot_config._asdict())
 
 
 def kill_subprocess(proc):
