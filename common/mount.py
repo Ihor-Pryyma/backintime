@@ -433,7 +433,7 @@ class MountControl(object):
 
         self.config = cfg or config.Config()
 
-        self.profile_id = profile_id if profile_id is not None else self.config.currentProfile()
+        self.profile_id = profile_id or self.config.currentProfile()
 
         self.tmp_mount = tmp_mount
         self.hash_id = hash_id
