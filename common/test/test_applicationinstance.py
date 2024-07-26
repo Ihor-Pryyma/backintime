@@ -21,7 +21,7 @@ import subprocess
 from unittest.mock import patch
 from threading import Thread
 
-from test import generic, utils
+from test import generic
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -70,7 +70,10 @@ class TestApplicationInstance(generic.TestCase):
         return self.subproc.pid
 
     def _killProcess(self):
-        utils.kill_subprocess(self.subproc)
+        if self.subproc:
+            subproc = self.subproc
+            subproc.kill()
+            subproc.wait()
         self.subproc = None
 
     def test_create_and_remove_pid_file(self):

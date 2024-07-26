@@ -29,7 +29,7 @@ from copy import deepcopy
 from unittest.mock import patch
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 import pyfakefs.fake_filesystem_unittest as pyfakefs_ut
-from test import generic, utils
+from test import generic
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import tools
@@ -95,7 +95,9 @@ class TestTools(generic.TestCase):
         return self.subproc.pid
 
     def _kill_process(self):
-        utils.kill_subprocess(self.subproc)
+        if self.subproc:
+            self.subproc.kill()
+            self.subproc.wait()
         self.subproc = None
 
     def test_sharePath(self):

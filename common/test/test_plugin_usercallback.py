@@ -1,21 +1,21 @@
-import sys
 import inspect
-import tempfile
-import stat
 import io
+import stat
+import sys
+import tempfile
 import unittest
 import unittest.mock as mock
-from pathlib import Path
 from ast import literal_eval
-from contextlib import redirect_stdout, redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
+from pathlib import Path
 
 # This workaround will become obsolet when migrating to src-layout
 sys.path.append(str(Path(__file__).parent))
 sys.path.append(str(Path(__file__).parent / 'plugins'))
+
 import pluginmanager
 from config import Config
-from test import utils
-from snapshots import Snapshots, SID
+from snapshots import SID, Snapshots
 from usercallbackplugin import UserCallbackPlugin
 
 
@@ -209,7 +209,26 @@ class SystemTest(unittest.TestCase):
     @classmethod
     def _create_config_file(cls, parent_path):
         """Minimal config file"""
-        config_data = utils.config_template.format(
+        config_data = """
+                config.version={config_version}
+                profile1.snapshots.include.1.type={snapshot_type}
+                profile1.snapshots.include.1.value={snapshot_value}
+                profile1.snapshots.include.size={snapshot_size}
+                profile1.snapshots.no_on_battery={no_on_battery}
+                profile1.snapshots.notify.enabled={notify_enabled}
+                profile1.snapshots.path={snapshot_path}
+                profile1.snapshots.path.host={snapshot_host}
+                profile1.snapshots.path.profile={snapshot_profile}
+                profile1.snapshots.path.user={snapshot_user}
+                profile1.snapshots.preserve_acl={preserve_acl}
+                profile1.snapshots.preserve_xattr={preserve_xattr}
+                profile1.snapshots.remove_old_snapshots.enabled={remove_old_snapshots_enabled}
+                profile1.snapshots.remove_old_snapshots.unit={remove_old_snapshots_unit}
+                profile1.snapshots.remove_old_snapshots.value={remove_old_snapshots_value}
+                profile1.snapshots.rsync_options.enabled={rsync_options_enabled}
+                profile1.snapshots.rsync_options.value={rsync_options_value}
+                profiles.version={profiles_version}
+            """.format(
             config_version=6,
             snapshot_type=0,
             snapshot_value=f'{parent_path}/{cls.NAME_SOURCE}',
