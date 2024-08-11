@@ -1,10 +1,8 @@
 import inspect
 import io
-import stat
-import sys
-import tempfile
 import unittest
 import unittest.mock as mock
+from contextlib import redirect_stdout, redirect_stderr
 from ast import literal_eval
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
@@ -15,7 +13,7 @@ sys.path.append(str(Path(__file__).parent / 'plugins'))
 
 import pluginmanager
 from config import Config
-from snapshots import SID, Snapshots
+from snapshots import Snapshots
 from usercallbackplugin import UserCallbackPlugin
 
 
@@ -178,7 +176,6 @@ class SystemTest(unittest.TestCase):
         callback_responses = []
 
         for line in response_lines:
-            to_eval = line[line.index("'")+1:line.rindex("'")]
 
             callback_responses.append(
                 literal_eval(line[line.index("'")+1:line.rindex("'")])

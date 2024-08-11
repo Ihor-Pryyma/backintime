@@ -23,8 +23,7 @@ import pathlib
 import gzip
 import stat
 import signal
-from time import sleep
-from datetime import datetime
+from unittest.mock import patch
 from copy import deepcopy
 from unittest.mock import patch
 from tempfile import NamedTemporaryFile, TemporaryDirectory
