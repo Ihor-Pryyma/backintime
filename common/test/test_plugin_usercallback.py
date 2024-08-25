@@ -1,10 +1,12 @@
+import sys
 import inspect
 import io
 import unittest
 import unittest.mock as mock
+import tempfile
+import stat
 from contextlib import redirect_stdout, redirect_stderr
 from ast import literal_eval
-from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 # This workaround will become obsolet when migrating to src-layout
