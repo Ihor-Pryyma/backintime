@@ -95,7 +95,6 @@ class CrontabDebug(pyfakefs_ut.TestCase):
             profile1.snapshots.rsync_options.value=
             profiles.version=1
         ''')
-        cfg_content = inspect.cleandoc(config_data)
 
         # config file location
         config_fp = parent_path / 'config_path' / 'config'
