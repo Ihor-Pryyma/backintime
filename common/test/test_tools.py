@@ -23,9 +23,10 @@ import pathlib
 import gzip
 import stat
 import signal
+from datetime import datetime
+from time import sleep
 from unittest.mock import patch
 from copy import deepcopy
-from unittest.mock import patch
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 import pyfakefs.fake_filesystem_unittest as pyfakefs_ut
 from test import generic

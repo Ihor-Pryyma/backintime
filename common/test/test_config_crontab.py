@@ -75,6 +75,7 @@ class CrontabDebug(pyfakefs_ut.TestCase):
 
     def _create_config_file(self, parent_path):
         """Minimal config file"""
+        # pylint: disable-next=R0801
         cfg_content = inspect.cleandoc('''
             config.version=6
             profile1.snapshots.include.1.type=0
