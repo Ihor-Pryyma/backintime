@@ -83,45 +83,26 @@ class CrontabDebug(pyfakefs_ut.TestCase):
 
     def _create_config_file(self, parent_path):
         """Minimal config file"""
-        config_data = """
-                config.version={config_version}
-                profile1.snapshots.include.1.type={snapshot_type}
-                profile1.snapshots.include.1.value={snapshot_value}
-                profile1.snapshots.include.size={snapshot_size}
-                profile1.snapshots.no_on_battery={no_on_battery}
-                profile1.snapshots.notify.enabled={notify_enabled}
-                profile1.snapshots.path={snapshot_path}
-                profile1.snapshots.path.host={snapshot_host}
-                profile1.snapshots.path.profile={snapshot_profile}
-                profile1.snapshots.path.user={snapshot_user}
-                profile1.snapshots.preserve_acl={preserve_acl}
-                profile1.snapshots.preserve_xattr={preserve_xattr}
-                profile1.snapshots.remove_old_snapshots.enabled={remove_old_snapshots_enabled}
-                profile1.snapshots.remove_old_snapshots.unit={remove_old_snapshots_unit}
-                profile1.snapshots.remove_old_snapshots.value={remove_old_snapshots_value}
-                profile1.snapshots.rsync_options.enabled={rsync_options_enabled}
-                profile1.snapshots.rsync_options.value={rsync_options_value}
-                profiles.version={profiles_version}
-            """.format(
-            config_version=6,
-            snapshot_type=0,
-            snapshot_value='rootpath/source',
-            snapshot_size=1,
-            no_on_battery='false',
-            notify_enabled='true',
-            snapshot_path='rootpath/destination',
-            snapshot_host='test-host',
-            snapshot_profile=1,
-            snapshot_user='test-user',
-            preserve_acl='false',
-            preserve_xattr='false',
-            remove_old_snapshots_enabled='true',
-            remove_old_snapshots_unit=80,
-            remove_old_snapshots_value=10,
-            rsync_options_enabled='false',
-            rsync_options_value='',
-            profiles_version=1
-        )
+        cfg_content = inspect.cleandoc('''
+            config.version=6
+            profile1.snapshots.include.1.type=0
+            profile1.snapshots.include.1.value=rootpath/source
+            profile1.snapshots.include.size=1
+            profile1.snapshots.no_on_battery=false
+            profile1.snapshots.notify.enabled=true
+            profile1.snapshots.path=rootpath/destination
+            profile1.snapshots.path.host=test-host
+            profile1.snapshots.path.profile=1
+            profile1.snapshots.path.user=test-user
+            profile1.snapshots.preserve_acl=false
+            profile1.snapshots.preserve_xattr=false
+            profile1.snapshots.remove_old_snapshots.enabled=true
+            profile1.snapshots.remove_old_snapshots.unit=80
+            profile1.snapshots.remove_old_snapshots.value=10
+            profile1.snapshots.rsync_options.enabled=false
+            profile1.snapshots.rsync_options.value=
+            profiles.version=1
+        ''')
         cfg_content = inspect.cleandoc(config_data)
 
         # config file location
